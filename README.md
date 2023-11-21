@@ -4,7 +4,7 @@ This is a Solidity program that simulates a creditor loaning of wei to a debtor.
 
 ## Description
 
-This program is a contract written in Solidity, an object-oriented programming language typically used for developing smart contracts on various blockchain platforms such as ethereum. This contract has you act as a creditor giving a loans to a debtors. This contract has a modifier called onlyCreditor which only allows the creditor to access the contract's functions.
+This program is a contract written in Solidity, an object-oriented programming language typically used for developing smart contracts on various blockchain platforms such as ethereum. This contract has you act as a creditor giving a loans to a debtors. This contract has a modifier called onlyCreditor which only allows the creditor to access the contract's functions and this modifier to applied to all of the functions within this contract. The contract has the following functions: sendLoan, getCreditorBalance, getDebtorBalance, debtorCooldownStatus, resetCooldown, triggerAssert, and viewTransactionFee. 
 
 
 
