@@ -1,10 +1,16 @@
 # FunctionsAndErrorsProject
 
-This is a Solidity program that simulates a creditor loaning of wei to a debtor. The purpose of this program is showcase my current understanding of Solidity as a programming language (the usage ) as well as serve as a referrence to those who are also new to Solidity like me. 
+This is a Solidity program that simulates a creditor loaning of wei to a debtor. The purpose of this program is showcase my current understanding of Solidity as a programming language (the usage of modifiers as well as error handling functions namely: require, assert, and revert) as well as serve as a referrence to those who are studying Solidity like me.
 
 ## Description
 
-This program is a contract written in Solidity, an object-oriented programming language typically used for developing smart contracts on various blockchain platforms such as ethereum. This contract mints tokens using the "mintToken" function which accepts an address(acts as the wallet address) and a positive integer value (amount of tokens to be minted or burned depending on the function being called) as parameters. This will then increase the balance of the provided address as well as increase the total supply by updating the "totalSupply" state variable. This contract can also burn tokens using the "burnToken" function which accepts an address and a value as parameters. However unlike the "mintToken" function, the "burnToken" function first performs a balance check on the address provided. If the balance of the address provided is greater than or equal to the amount of tokens to be burned then the burning of tokens will proceed otherwise no burning of tokens will occur and the transaction will be shown as completed. Lastly, this contract allows you to view the balance of a provided address, view the total supply of tokens, view the token name, and view the token abbreviation.
+This program is a contract written in Solidity, an object-oriented programming language typically used for developing smart contracts on various blockchain platforms such as ethereum. This contract has you
+act as a creditor giving a loans to a debtors. This contract has a modifier called onlyCreditor which only allows the creditor to access the contract's functions.
+
+
+
+
+mints tokens using the "mintToken" function which accepts an address(acts as the wallet address) and a positive integer value (amount of tokens to be minted or burned depending on the function being called) as parameters. This will then increase the balance of the provided address as well as increase the total supply by updating the "totalSupply" state variable. This contract can also burn tokens using the "burnToken" function which accepts an address and a value as parameters. However unlike the "mintToken" function, the "burnToken" function first performs a balance check on the address provided. If the balance of the address provided is greater than or equal to the amount of tokens to be burned then the burning of tokens will proceed otherwise no burning of tokens will occur and the transaction will be shown as completed. Lastly, this contract allows you to view the balance of a provided address, view the total supply of tokens, view the token name, and view the token abbreviation.
 
 ## Getting Started
 
