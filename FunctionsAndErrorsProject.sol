@@ -36,7 +36,7 @@ contract FunctionsAndErrors{
 
   //Function to get the balance of the debtor's account. This is not secure and is just for testing purposes. 
   function getDebtorBalance(uint _debtorId) public view onlyCreditor returns(uint){
-
+    require(_debtorId == 0 || _debtorId == 1,"Invalid debtor ID");
     return debtorBalance[_debtorId];
 
   }
@@ -50,7 +50,7 @@ contract FunctionsAndErrors{
     Will revert if either the creditor's balance or the debtor's balance is insufficient.*/
   function sendLoan(uint _loanAmount, uint _debtorId) public payable onlyCreditor{
     assert(transactionFee == 10);
-    
+    require(_debtorId == 0 || _debtorId == 1,"Invalid debtor ID");
     require(debtorOnCooldown[_debtorId] == false,"Debtor on transaction cooldown cannot receive any loans");
 
     debtorOnCooldown[_debtorId] = true;
@@ -68,14 +68,14 @@ contract FunctionsAndErrors{
 
   //Function to check the status of the debtor if they are on cooldown from receiving any more loans.
   function debtorCooldownStatus(uint _debtorId) public view onlyCreditor returns(bool){
-
+    require(_debtorId == 0 || _debtorId == 1,"Invalid debtor ID");
     return debtorOnCooldown[_debtorId];
   }
 
   //Function to set the debtorOnCooldown of the debtor associated with the provided _debtorId to false.
   //This function will enable the debtor associated with the provided _debtorId to be able to receive another loan.
   function resetCooldown(uint _debtorId) public onlyCreditor{
-    
+    require(_debtorId == 0 || _debtorId == 1,"Invalid debtor ID");
     debtorOnCooldown[_debtorId] = false;
 
   }
