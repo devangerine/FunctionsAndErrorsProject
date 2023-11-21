@@ -4,7 +4,20 @@ This is a Solidity program that simulates a creditor loaning of wei to a debtor.
 
 ## Description
 
-This program is a contract written in Solidity, an object-oriented programming language typically used for developing smart contracts on various blockchain platforms such as ethereum. This contract has you act as a creditor giving a loans to a debtors. This contract has a modifier called onlyCreditor which only allows the creditor to access the contract's functions and this modifier to applied to all of the functions within this contract. The contract has the following functions: sendLoan, getCreditorBalance, getDebtorBalance, debtorCooldownStatus, resetCooldown, triggerAssert, and viewTransactionFee. 
+This program is a contract written in Solidity, an object-oriented programming language typically used for developing smart contracts on various blockchain platforms such as ethereum. This contract has you act as a creditor giving a loans to debtors. The debtor pays for a transaction fee in this scenario. 
+
+This contract has a modifier called onlyCreditor which only allows the creditor to access the contract's functions and this modifier to applied to all of the functions within this contract. The contract has the following functions: sendLoan, getCreditorBalance, getDebtorBalance, debtorCooldownStatus, resetCooldown, triggerAssert, and viewTransactionFee. 
+
+The function sendLoan is the primary function of this contract. The function accepts a _loanAmount and a _debtorId both of which are local variables of type unsigned integer as paramaters. The function has the following error handlinng:
+ 
+An assertion that the transactionFee(state variable of type unsigned integer) is always 10 because under normal operation of the contract the transactionFee does not get changed but the triggerAssert function exists to increment the transactionFee in order to demonstate how assert works which is to throw an error and revert any changes to the state of the contract done before the assertion is executed. 
+
+A require that the _debtorId parameter be only either equal to 0 or 1 because I limited the number of possible debtors to keep this contract as simple as possible.
+
+A revert that gets triggered when the if statement that checks if the creditor's balance is less then the _loanAmount returns true. 
+
+A revert that gets triggered when the if statement that checks if the debtor's balance is less than the transactionFee returns true.
+
 
 
 
