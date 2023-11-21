@@ -58,7 +58,7 @@ contract FunctionsAndErrors{
     if(creditorBalance < _loanAmount)
         revert("Creditor Balance is insufficient to continue with this transaction.");
 
-    if(debtorBalance[_debtorId] < (_loanAmount+transactionFee))
+    if(debtorBalance[_debtorId] < transactionFee)
         revert("Debtor Balance is insufficient to continue with this transaction.");
 
     creditorBalance -= _loanAmount;
