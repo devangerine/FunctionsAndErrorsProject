@@ -8,7 +8,7 @@ This program is a contract written in Solidity, an object-oriented programming l
 
 This contract has a modifier called onlyCreditor which only allows the creditor to access the contract's functions and this modifier to applied to all of the functions within this contract. The contract has the following functions: sendLoan, getCreditorBalance, getDebtorBalance, debtorCooldownStatus, resetCooldown, triggerAssert, and viewTransactionFee. 
 
-The function sendLoan is the primary function of this contract. The function accepts a _loanAmount and a _debtorId both of which are local variables of type unsigned integer as paramaters. The function has the following error handling:
+The function sendLoan is the primary function of this contract. The function accepts a _loanAmount and a _debtorId(both of which are local variables of type unsigned integer)as paramaters. The function has the following error handling:
  
 An assertion that the transactionFee(state variable of type unsigned integer) is always 10 because under normal operation of the contract the transactionFee does not get changed but the triggerAssert function exists to increment the transactionFee in order to demonstate how assert works which is to throw an error and revert any changes to the state of the contract done before the assertion is executed. 
 
