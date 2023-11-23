@@ -6,7 +6,14 @@ This is a Solidity program that simulates a creditor loaning of wei to a debtor.
 
 This program is a contract written in Solidity, an object-oriented programming language typically used for developing smart contracts on various blockchain platforms such as ethereum. This contract has you act as a creditor giving a loans to debtors. The debtor pays for a transaction fee in this transaction. 
 
-This contract has a modifier called onlyCreditor which only allows the creditor to access the contract's functions and this modifier to applied to all of the functions within this contract. The contract has the following functions: sendLoan, getCreditorBalance, getDebtorBalance, debtorCooldownStatus, resetCooldown, triggerAssert, and viewTransactionFee. 
+This contract has a modifier called onlyCreditor which only allows the creditor to access the contract's functions. This modifier to applied to all of the functions within this contract. The contract has the following functions: 
+* sendLoan - sends a loan amount to a debtor associated with the provided debtorId and sets that debtor's debtorOnCooldown status to true preventing that debtor from taking any more loans. 
+* getCreditorBalance - returns the creditor's current balance. 
+* getDebtorBalance - returns the balance of the debtor associated the provided _debtorId. 
+* debtorCooldownStatus - returns the cooldown of the debtor associated the provided _debtorId.
+* resetCooldown - sets the debtorOnCooldown status debtor associated with the provided debtorId back to false thus allowing that debtor to take another loan.
+* triggerAssert - increments the transactionFee state variable to trigger the assert statement that assumes it never changes to demonstrate the function of assert.
+* viewTransactionFee - returns the current value of the state variable transactionFee.
 
 The function **sendLoan** is the primary function of this contract. This function accepts a _loanAmount and a _debtorId(both of which are local variables of type unsigned integer) as paramaters and has the following error handling:
 
@@ -19,6 +26,8 @@ The function **sendLoan** is the primary function of this contract. This functio
 * A revert that gets triggered when the if statement that checks if the debtor's balance is less than the transactionFee returns true.
 
 The function getCreditorBalance returns the current balance of the creditor. 
+
+
 
 ## Getting Started
 
