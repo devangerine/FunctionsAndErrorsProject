@@ -7,11 +7,11 @@ This is a Solidity program that simulates a creditor loaning of wei to a debtor.
 This program is a contract written in Solidity, an object-oriented programming language typically used for developing smart contracts on various blockchain platforms such as ethereum. This contract has you act as a creditor giving a loans to debtors. The debtor pays for a transaction fee in this transaction. 
 
 This contract has a modifier called onlyCreditor which only allows the creditor to access the contract's functions. This modifier to applied to all of the functions within this contract. The contract has the following functions: 
-* sendLoan - sends a loan amount to a debtor associated with the provided debtorId and sets that debtor's debtorOnCooldown status to true preventing that debtor from taking any more loans. 
+* sendLoan - sends a _loanAmount of type unsigned integer to a debtor associated with the user-inputted debtorId of type unsigned integer and sets that debtor's debtorOnCooldown status to true preventing that debtor from taking any more loans. 
 * getCreditorBalance - returns the creditor's current balance. 
-* getDebtorBalance - returns the balance of the debtor associated the provided _debtorId. 
-* debtorCooldownStatus - returns the cooldown of the debtor associated the provided _debtorId.
-* resetCooldown - sets the debtorOnCooldown status of the debtor associated with the provided debtorId back to false thus allowing that debtor to take another loan.
+* getDebtorBalance - returns the balance of the debtor associated the user-inputted _debtorId of type unsigned integer. 
+* debtorCooldownStatus - returns the cooldown of the debtor associated the user-inputted _debtorId of type unsigned integer.
+* resetCooldown - sets the debtorOnCooldown status of the debtor associated with the user-inputted debtorId of type unsigned integer back to false thus allowing that debtor to take another loan.
 * triggerAssert - increments the transactionFee state variable to trigger the assert statement that assumes it never changes to demonstrate the function of assert.
 * viewTransactionFee - returns the current value of the state variable transactionFee.
 
@@ -132,17 +132,36 @@ After the contract has been compiled, you can now deploy the contract by clickin
 
 
 ### Post Contract Deployment
-After the contract has been deployed, the contract will be found under "Deployed Contracts". Expand it by clicking the ">" button below "Deployed Contracts". You should see the following buttons: "burnToken", "mintToken", "balances", "tokenAbbreviation", "tokenName", and "totalSupply". The "burnToken" and "mintTokem" buttons have input fields beside each button. These input fields accepts an address and a positive integer value as parameters/input strictly in that order. The aforementioned parameters/input are separated by a comma (e.g. 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4,1000). You can get an address by clicking the "Copy account to clipboard" button which looks like two pieces of paper stacked on the of each other with the upper right corner folded. This button is found below "Account" and beside the current selected Account/Address. After clicking the "Copy account to clipboard" button you can now paste it inside the input fields beside the following buttons: "burnToken", "mintToken", or "balances". The input field beside the "balances" button only accepts an address as parameter/input. Note: The address you will be using can vary from my example. 
+After the contract has been deployed, the contract will be found under "Deployed Contracts". Expand it by clicking the ">" button below "Deployed Contracts". You should see the following buttons: 
+* sendLoan - sends a _loanAmount of type unsigned integer to a debtor associated with the user-inputted debtorId of type unsigned integer and sets that debtor's debtorOnCooldown status to true preventing that debtor from taking any more loans. 
+* getCreditorBalance - returns the creditor's current balance. 
+* getDebtorBalance - returns the balance of the debtor associated the user-inputted _debtorId of type unsigned integer. 
+* debtorCooldownStatus - returns the cooldown of the debtor associated the user-inputted _debtorId of type unsigned integer.
+* resetCooldown - sets the debtorOnCooldown status of the debtor associated with the user-inputted debtorId of type unsigned integer back to false thus allowing that debtor to take another loan.
+* triggerAssert - increments the transactionFee state variable to trigger the assert statement that assumes it never changes to demonstrate the function of assert.
+* viewTransactionFee - returns the current value of the state variable transactionFee.
 
+These buttons correspond to each of the functions within the contract.
+The sendLoan, getDebtorBalance, debtorCooldownStatus, and resetCooldown have input fields beside them.
 
 You can interact with contract with the following actions:
 
-#### I - Token Information, Supply Count, and Balances
-1.) Click the "tokenName" button to view the name of the token.
+#### I - Sending a loan
+Note: sendLoan has the following error handling:
 
-2.) Click the "tokenAbbreviation" button to view the abbreviation of the token.
+* An assertion that the transactionFee(state variable of type unsigned integer) is always 10 because under normal operation of the contract the transactionFee does not get changed but the triggerAssert function exists to increment the transactionFee in order to demonstate how assert works which is to throw an error and revert any changes to the state of the contract done before the assertion is executed. 
 
-3.) Click the "totalSupply" button to view the total supply of tokens that have been minted. (This will display 0 below it if you have not minted any tokens or burned all of your tokens)
+* A require that the _debtorId parameter be only either equal to 0 or 1 because I limited the number of possible debtors to keep this contract as simple as possible.   
+
+* A revert that gets triggered when the if statement that checks if the creditor's balance is less then the _loanAmount returns true. 
+
+* A revert that gets triggered when the if statement that checks if the debtor's balance is less than the transactionFee returns true.
+
+1.) Find the input field beside the "sendLoan" button.
+
+2.) Click the input field beside the "sendLoan" button and input a _loanAmount and a _debtorId seprated by a comma (e.g. 60, 0). The _debtorId must only be either a 0 or a 1.
+
+3.) Click the  the "sendLoan" button to send the _loanAmount to the debtor assocaited with the _debtorId you provided. This will fail if the debtor assocaited with the _debtorId is on cooldown as indicated by the debtorOnCooldown array state variable. 
 
 4.) Copy an address and paste it inside the input field beside the "balances" button. (Please read the "Post Contract Deployment" section of this README.md for instructions on how to find and copy an address) After pasting the address inside the input field, click the "balances" button to view the balance of the account/address you provided.
 
