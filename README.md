@@ -10,13 +10,13 @@ This contract has a modifier called onlyCreditor which only allows the creditor 
 
 The function sendLoan is the primary function of this contract. The function accepts a _loanAmount and a _debtorId(both of which are local variables of type unsigned integer)as paramaters. The function has the following error handling:
  
-*An assertion that the transactionFee(state variable of type unsigned integer) is always 10 because under normal operation of the contract the transactionFee does not get changed but the triggerAssert function exists to increment the transactionFee in order to demonstate how assert works which is to throw an error and revert any changes to the state of the contract done before the assertion is executed. 
+Markup : -An assertion that the transactionFee(state variable of type unsigned integer) is always 10 because under normal operation of the contract the transactionFee does not get changed but the triggerAssert function exists to increment the transactionFee in order to demonstate how assert works which is to throw an error and revert any changes to the state of the contract done before the assertion is executed. 
 
-*A require that the _debtorId parameter be only either equal to 0 or 1 because I limited the number of possible debtors to keep this contract as simple as possible.
+-A require that the _debtorId parameter be only either equal to 0 or 1 because I limited the number of possible debtors to keep this contract as simple as possible.
 
-*A revert that gets triggered when the if statement that checks if the creditor's balance is less then the _loanAmount returns true. 
+-A revert that gets triggered when the if statement that checks if the creditor's balance is less then the _loanAmount returns true. 
 
-*A revert that gets triggered when the if statement that checks if the debtor's balance is less than the transactionFee returns true.
+-A revert that gets triggered when the if statement that checks if the debtor's balance is less than the transactionFee returns true.
 
 
 
