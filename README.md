@@ -139,7 +139,7 @@ After the contract has been compiled, you can now deploy the contract by clickin
 
 ### Post Contract Deployment
 After the contract has been deployed, the contract will be found under "Deployed Contracts". Expand it by clicking the ">" button below "Deployed Contracts". You should see the following buttons: 
-* sendLoan - sends a _loanAmount of type unsigned integer to a debtor associated with the user-inputted debtorId of type unsigned integer and sets that debtor's debtorOnCooldown status to true preventing that debtor from taking any more loans. 
+* sendLoan - sends a _loanAmount of type unsigned integer to a debtor associated with the user-inputted debtorId of type unsigned integer and sets that debtor's debtorOnCooldown status to true preventing that debtor from receiving any more loans. 
 * getCreditorBalance - returns the creditor's current balance. 
 * getDebtorBalance - returns the balance of the debtor associated the user-inputted _debtorId of type unsigned integer. 
 * debtorCooldownStatus - returns the cooldown of the debtor associated the user-inputted _debtorId of type unsigned integer.
@@ -208,7 +208,21 @@ Note: sendLoan has the following error handling:
 
 2.) Click the input field beside the "sendLoan" button and input a _loanAmount and a _debtorId seprated by a comma (e.g. 60, 0). The _debtorId must only be either a 0 or a 1.
 
-3.) Click the  the "sendLoan" button to send the _loanAmount to the debtor assocaited with the _debtorId you provided. This will fail if debtor's debtorOnCooldown status is true otherwise the loan will be sent successfully.(Refer to the error handling list of this function found above.) You can verify that the loan was sent by clicking the "getCreditorBalance" button and the "getDebtorBalance" button. Use the _debtorId you used here in "sendLoan" as your input for "getDebtorbalance". After the transaction the debtor assocaited with the _debtorId will be put on coolddown and cannot take any more loans unless you reset that cooldown more on that later. 
+3.) Click the  the "sendLoan" button to send the _loanAmount to the debtor assocaited with the _debtorId you provided. This will fail if debtor's debtorOnCooldown status is true otherwise the loan will be sent successfully.(Refer to the error handling list of this function found above.) You can verify that the loan was sent by clicking the "getCreditorBalance" button and the "getDebtorBalance" button. Use the _debtorId you used here in "sendLoan" as your input for "getDebtorbalance". After the transaction the debtor assocaited with the _debtorId will be put on coolddown and receive loans unless you reset that cooldown more on that later. 
+
+#### V - Resetting the debtorOnCooldown status of a debtor
+
+Note: debtorOnCooldownStatus has the following error handling:
+
+* A require that the _debtorId parameter be only either equal to 0 or 1 because I limited the number of possible debtors to keep this contract as simple as possible. 
+
+**Steps on getting the debtorOnCooldown status of a debtor:**
+
+1.) Find the input field beside the "resetCooldown" button.
+
+2.) Input a _debtorId in that input field. The _debtorId must only be either a 0 or a 1. (Refer to the error handling list of this function found above.)
+
+3.) Click the "resetCooldown" button. The current debtorOnCooldown status of the debtor associated with the _debtorId you provided will be set to false thus allow the debtor to receive a loan. You can verify this change by using the debtorOnCooldown function making sure to input the same _debtorId you inputed in resetCooldown to debtorOnCooldown.
 
 
 #### III - Burning of Tokens
