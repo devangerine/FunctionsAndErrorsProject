@@ -152,7 +152,31 @@ The sendLoan, getDebtorBalance, debtorCooldownStatus, and resetCooldown have inp
 
 You can interact with contract with the following actions:
 
-#### I - Sending a loan
+#### I - Getting the balance of the creditor
+
+**Steps on getting the balance of the creditor:**
+
+1.) Find the "getCreditorBalance" button.
+
+2.) Click the "getCreditorBalance" button. The current balance of the creditor will be shown below the button.
+
+#### II - Getting the balance of the debtor
+
+Note: sendLoan has the following error handling:
+
+* A require that the _debtorId parameter be only either equal to 0 or 1 because I limited the number of possible debtors to keep this contract as simple as possible. 
+
+**Steps on getting the balance of the debtor:**
+
+1.) Find the input field beside the "getDebtorBalance" button.
+
+2.) Input a _debtorId in that input field. The _debtorId must only be either a 0 or a 1. (Refer to the error handling list of this function found above.)
+
+3.) Click the "getCreditorBalance" button. The current balance of the creditor will be shown below the button.
+
+
+
+#### III - Sending a loan
 Note: sendLoan has the following error handling:
 
 * An assertion that the transactionFee(state variable of type unsigned integer) is always 10 because under normal operation of the contract the transactionFee does not get changed but the triggerAssert function exists to increment the transactionFee in order to demonstate how assert works which is to throw an error and revert any changes to the state of the contract done before the assertion is executed. 
@@ -165,21 +189,14 @@ Note: sendLoan has the following error handling:
 
 * A revert that gets triggered when the if statement that checks if the debtor's balance is less than the transactionFee returns true.
 
+**Steps on sending a loan:**
+
 1.) Find the input field beside the "sendLoan" button.
 
 2.) Click the input field beside the "sendLoan" button and input a _loanAmount and a _debtorId seprated by a comma (e.g. 60, 0). The _debtorId must only be either a 0 or a 1.
 
-3.) Click the  the "sendLoan" button to send the _loanAmount to the debtor assocaited with the _debtorId you provided. This will fail if the debtor assocaited with the _debtorId is on cooldown because of the 
+3.) Click the  the "sendLoan" button to send the _loanAmount to the debtor assocaited with the _debtorId you provided. This will fail if debtor's debtorOnCooldown status is true otherwise the loan will be sent successfully.(Refer to the error handling list of this function found above.) You can verify that the loan was sent by clicking the "getCreditorBalance" button and the "getDebtorBalance" button. Use the _debtorId you used here in "sendLoan" as your input for "getDebtorbalance". After the transaction the debtor assocaited with the _debtorId will be put on coolddown and cannot take any more loans unless you reset that cooldown more on that later.
 
-4.) Copy an address and paste it inside the input field beside the "balances" button. (Please read the "Post Contract Deployment" section of this README.md for instructions on how to find and copy an address) After pasting the address inside the input field, click the "balances" button to view the balance of the account/address you provided.
-
-#### II - Minting of Tokens
-
-1.) Copy an address and paste it inside the input field beside the "mintToken" button. (Please read the "Post Contract Deployment" section of this README.md for instructions on how to find and copy an address) type a comma (,) after the address you just pasted and type a positive integer beside it. (e.g. 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4,1000). Once the input field beside the "mintToken" button has been filled like in the example shown before, click the "mintToken" button to mint tokens.
-
-2.) Click on the "totalSupply" button to confirm that the total supply of minted tokens have increased accordingly. 
-
-3.) Click the input field beside the "balances" button and paste the same address you used in the input field beside the "mintToken" button. (e.g. 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4). Afterwards click the "balances" button to confirm that the balance of that address you provided has increased accordingly. If the balance did not increase please make sure that the address you provided matches the address you provided in the input field beside the "mintToken" button. 
 
 #### III - Burning of Tokens
 
