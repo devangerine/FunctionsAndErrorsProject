@@ -11,7 +11,7 @@ This contract has a modifier called onlyCreditor which only allows the creditor 
 * getCreditorBalance - returns the creditor's current balance. 
 * getDebtorBalance - returns the balance of the debtor associated the provided _debtorId. 
 * debtorCooldownStatus - returns the cooldown of the debtor associated the provided _debtorId.
-* resetCooldown - sets the debtorOnCooldown status debtor associated with the provided debtorId back to false thus allowing that debtor to take another loan.
+* resetCooldown - sets the debtorOnCooldown status of the debtor associated with the provided debtorId back to false thus allowing that debtor to take another loan.
 * triggerAssert - increments the transactionFee state variable to trigger the assert statement that assumes it never changes to demonstrate the function of assert.
 * viewTransactionFee - returns the current value of the state variable transactionFee.
 
