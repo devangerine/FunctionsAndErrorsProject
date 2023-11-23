@@ -259,7 +259,7 @@ In this case, we will be intentionally triggering it through the use of triggerA
 
 ## Code explanation and Contract usage Video Walkthrough
 Below is the video walkthrough on how to use the contract once you already have it compiled and deployed on the Remix IDE:
-https://www.loom.com/share/41c78dc255a248d9900d4844c239665a
+https://www.loom.com/share/729d20832a7b4f1c824a6c1f79662c21
 
 
 ## Help
