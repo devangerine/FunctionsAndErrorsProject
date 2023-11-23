@@ -205,37 +205,57 @@ Note: sendLoan has the following error handling:
 
 **Steps on sending a loan:**
 
+**Note: The _debtorId with the value of 1 has 0 balance and will always trigger the revert within tge condtional statement checking that the debtor's balance is greater than the transactionFee.**
+
 1.) Find the input field beside the "sendLoan" button.
 
 2.) Click the input field beside the "sendLoan" button and input a _loanAmount and a _debtorId seprated by a comma (e.g. 60, 0). The _debtorId must only be either a 0 or a 1.
 
-3.) Click the  the "sendLoan" button to send the _loanAmount to the debtor assocaited with the _debtorId you provided. This will fail if debtor's debtorOnCooldown status is true otherwise the loan will be sent successfully.(Refer to the error handling list of this function found above.) You can verify that the loan was sent by clicking the "getCreditorBalance" button and the "getDebtorBalance" button. Use the _debtorId you used here in "sendLoan" as your input for "getDebtorbalance". After the transaction the debtor assocaited with the _debtorId will be put on coolddown and receive loans unless you reset that cooldown more on that later. 
+3.) Click the  the "sendLoan" button to send the _loanAmount to the debtor assocaited with the _debtorId you provided. This will fail if debtor's debtorOnCooldown status is true or both/either the debtor and/or the creditor do not have enough balance for the transaction otherwise the loan will be sent successfully.(Refer to the error handling list of this function found above.) You can verify that the loan was sent by clicking the "getCreditorBalance" button and the "getDebtorBalance" button. Use the _debtorId you used here in "sendLoan" as your input for "getDebtorbalance". After the transaction the debtor assocaited with the _debtorId will be put on coolddown and receive loans unless you reset that cooldown more on that later. 
 
-#### V - Resetting the debtorOnCooldown status of a debtor
+#### V - Using resetCooldown to reset the debtorOnCooldown status of a debtor
 
 Note: debtorOnCooldownStatus has the following error handling:
 
 * A require that the _debtorId parameter be only either equal to 0 or 1 because I limited the number of possible debtors to keep this contract as simple as possible. 
 
-**Steps on getting the debtorOnCooldown status of a debtor:**
+**Steps on Using resetCooldown to reset the debtorOnCooldown status of a debtor:**
 
-1.) Find the input field beside the "resetCooldown" button.
+1.) Find the "resetCooldown" button.
 
 2.) Input a _debtorId in that input field. The _debtorId must only be either a 0 or a 1. (Refer to the error handling list of this function found above.)
 
 3.) Click the "resetCooldown" button. The current debtorOnCooldown status of the debtor associated with the _debtorId you provided will be set to false thus allow the debtor to receive a loan. You can verify this change by using the debtorOnCooldown function making sure to input the same _debtorId you inputed in resetCooldown to debtorOnCooldown.
 
+#### VI - Getting the value of the transactionFee using viewTransactionFee
 
-#### III - Burning of Tokens
+**Steps on getting the value of the transactionFee:**
 
-#### Note: You can attempt to burn tokens even while having zero(0) balance or a balance below the inputted amount of tokens to be burned. The transaction will proceed but no burning of tokens will occur because of the balance check if statement found in the burnToken function of the code I provided that does not allow the burning of tokens to occur when the balance of the provided address/account is zero(0) or below the inputted amount of tokens to be burned. 
+1.) Find the "viewTransactionFee" button.
 
- 1.) Copy an address and paste it inside the input field beside the "burnToken" button. (Please read the "Post Contract Deployment" section of this README.md for instructions on how to find and copy an address) type a comma (,) after the address you just pasted and type a positive integer beside it. (e.g. 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4,1000). Once the input field beside the "burnToken" button has been filled like in the example shown before, click the "burnToken" button to burn tokens. 
+2.) Click the "viewTransactionFee" button. The value of the transactionFee will be found below the button. It should display 10 if the triggerAssert function has not been used.
 
- 2.) Click on the "totalSupply" button to confirm that the total supply of minted tokens have deccreased accordingly. If the total supply did not decrease please see the Note of the "Burning of Tokens" section of this README.md.
+#### VII - Using triggerAssert
 
+The sendLoan function has an assertion that the transactionFee(state variable of type unsigned integer) is always 10 because under normal operation of the contract the transactionFee does not get changed but the triggerAssert function exists to increment the transactionFee in order to demonstate how assert works which is to throw an error and revert any changes to the state of the contract done before the assertion is executed.  
 
- 3.) Click the input field beside the "balances" button and paste the same address you used in the input field beside the "mintToken" button. (e.g. 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4). Afterwards click the "balances" button to confirm that the balance of that address you provided has increased accordingly. If the balance of the provided address did not decrease accordingly, please make sure that the address you provided is the matches the address you provided in the input field beside the "burnToken" button. Otherwise, after you have made sure that the two addressess match then please read the Note of the "Burning of Tokens" section of this README.md. 
+In this case, we will be intentionally triggering it through the use of triggerAssert.
+
+**Steps on getting the value of the transactionFee:**
+
+1.) Find the "triggerAssert" button.
+
+2.) Click the "triggerAssert" button. The value of the transactionFee will be incremented by 1. You can verify the change to the transactionFee variable by clicking the viewTransactionFee button.
+
+3.) Try sending a loan. (Refer to the instructions on how to send a loan found in the IV - Sending a loan section of this readme file.) It should fail and throw an error.
+
+#### VII - Using resetTransactionFee to reset the transactionFee to it's default value of 10
+
+1.) Find the "resetTransactionFee" button.
+
+2.) Click the "triggerAssert" button. The value of the transactionFee will set to it's default value of 10. You can verify the change to the transactionFee variable by clicking the viewTransactionFee button.
+
+3.) Try sending a loan. (Refer to the instructions on how to send a loan found in the IV - Sending a loan section of this readme file.) It should succeed and throw no errors. You can verify this by viewing the balances of the creditor and the debtor you send the loan to by using getCreditorBalance and getDebtorBalance respectively. 
 
 ## Code explanation and Contract usage Video Walkthrough
 Below is the video walkthrough on how to use the contract once you already have it compiled and deployed on the Remix IDE:
@@ -247,14 +267,14 @@ https://www.loom.com/share/41c78dc255a248d9900d4844c239665a
 ### Compilation failed
 Please check if the code inside the .sol file you created in remix matches the code I provided. If it does not match then please copy the code I provided in its entirety and replace the code in the .sol filed that you created in Remix. If it does match and it still will not compile then please check your internet connection or trying a different browser or updating your current browser. 
 
-### Balance did not increase after minting tokens
-Please make sure that the address you provided in the inpute field beside the "balances" button matches the address you provided the input field beside the "mintToken" button.
+### Debtor balance did not increase/Creditor balance did not dencrease after sending loan
+Please make sure that the _debtorId you provided in the input field beside the "sendLoan" button matches the address you provided the input field beside the "getDebtorBalance" button. If both matches there may have been another error such as: 
 
-### Balance did not dencrease after burning tokens
-Please make sure that the address you provided in the inpute field beside the "balances" button matches the address you provided the input field beside the "burnToken" button. If they match then please read the Note of the "Burning of Tokens" section. Burning of tokens cannot occur when the balance is zero(0) or below the amount of tokens to be burned.
+The transaction itself failed due to either the debtor being on cooldown.
 
-### Total supply did not decrease after burning tokens
-Burning of tokens cannot occur when the balance is zero(0) or below the amount of tokens to be burned. Please read the Note of the "Burning of Tokens" section for more information.
+The creditor does not have enough balance for the transaction.
+
+The debtor does not have enough balance for the transaction.
 
 If the above does not help or cover the issue you are having with regards to this Solidity Contract I made then please feel free to reach me at 201812805@fit.edu.ph or voltairedvx@gmail.com and I will try to help you as soon as I can.
 
@@ -266,16 +286,3 @@ Drennix Guerrero @ 201812805@fit.edu.ph
 ## License
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
-
-The function **sendLoan** is the primary function of this contract. This function accepts a _loanAmount and a _debtorId(both of which are local variables of type unsigned integer) as paramaters and has the following error handling:
-
-* An assertion that the transactionFee(state variable of type unsigned integer) is always 10 because under normal operation of the contract the transactionFee does not get changed but the triggerAssert function exists to increment the transactionFee in order to demonstate how assert works which is to throw an error and revert any changes to the state of the contract done before the assertion is executed. 
-
-* A require that the _debtorId parameter be only either equal to 0 or 1 because I limited the number of possible debtors to keep this contract as simple as possible.   
-
-* A revert that gets triggered when the if statement that checks if the creditor's balance is less then the _loanAmount returns true. 
-
-* A revert that gets triggered when the if statement that checks if the debtor's balance is less than the transactionFee returns true.
-
-The function getCreditorBalance returns the current balance of the creditor. 
-
