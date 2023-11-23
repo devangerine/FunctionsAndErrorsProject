@@ -14,6 +14,7 @@ This contract has a modifier called onlyCreditor which only allows the creditor 
 * resetCooldown - sets the debtorOnCooldown status of the debtor associated with the user-inputted debtorId of type unsigned integer back to false thus allowing that debtor to take another loan.
 * triggerAssert - increments the transactionFee state variable to trigger the assert statement that assumes it never changes to demonstrate the function of assert.
 * viewTransactionFee - returns the current value of the state variable transactionFee.
+* resetTransactionFee - sets the transactionFee back to its default value of 10.
 
 This contract uses the following error handling functions:
 
