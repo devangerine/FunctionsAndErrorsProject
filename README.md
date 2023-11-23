@@ -162,7 +162,7 @@ You can interact with contract with the following actions:
 
 #### II - Getting the balance of the debtor
 
-Note: sendLoan has the following error handling:
+Note: getDebtorBalance has the following error handling:
 
 * A require that the _debtorId parameter be only either equal to 0 or 1 because I limited the number of possible debtors to keep this contract as simple as possible. 
 
@@ -174,9 +174,22 @@ Note: sendLoan has the following error handling:
 
 3.) Click the "getCreditorBalance" button. The current balance of the creditor will be shown below the button.
 
+#### III - Getting the debtorOnCooldown status of a debtor
 
+Note: debtorOnCooldown has the following error handling:
 
-#### III - Sending a loan
+* A require that the _debtorId parameter be only either equal to 0 or 1 because I limited the number of possible debtors to keep this contract as simple as possible. 
+
+**Steps on getting the debtorOnCooldown status of a debtor:**
+
+1.) Find the input field beside the "debtorOnCooldown" button.
+
+2.) Input a _debtorId in that input field. The _debtorId must only be either a 0 or a 1. (Refer to the error handling list of this function found above.)
+
+3.) Click the "debtorOnCooldown" button. The current debtorOnCooldown status of the debtor associated with the _debtorId you provided will be displayed below. It will be false if the debtor is not cooldown
+otherwise true if the debtor is on cooldown and cannot take a loan.
+
+#### IV - Sending a loan
 Note: sendLoan has the following error handling:
 
 * An assertion that the transactionFee(state variable of type unsigned integer) is always 10 because under normal operation of the contract the transactionFee does not get changed but the triggerAssert function exists to increment the transactionFee in order to demonstate how assert works which is to throw an error and revert any changes to the state of the contract done before the assertion is executed. 
@@ -195,7 +208,7 @@ Note: sendLoan has the following error handling:
 
 2.) Click the input field beside the "sendLoan" button and input a _loanAmount and a _debtorId seprated by a comma (e.g. 60, 0). The _debtorId must only be either a 0 or a 1.
 
-3.) Click the  the "sendLoan" button to send the _loanAmount to the debtor assocaited with the _debtorId you provided. This will fail if debtor's debtorOnCooldown status is true otherwise the loan will be sent successfully.(Refer to the error handling list of this function found above.) You can verify that the loan was sent by clicking the "getCreditorBalance" button and the "getDebtorBalance" button. Use the _debtorId you used here in "sendLoan" as your input for "getDebtorbalance". After the transaction the debtor assocaited with the _debtorId will be put on coolddown and cannot take any more loans unless you reset that cooldown more on that later.
+3.) Click the  the "sendLoan" button to send the _loanAmount to the debtor assocaited with the _debtorId you provided. This will fail if debtor's debtorOnCooldown status is true otherwise the loan will be sent successfully.(Refer to the error handling list of this function found above.) You can verify that the loan was sent by clicking the "getCreditorBalance" button and the "getDebtorBalance" button. Use the _debtorId you used here in "sendLoan" as your input for "getDebtorbalance". After the transaction the debtor assocaited with the _debtorId will be put on coolddown and cannot take any more loans unless you reset that cooldown more on that later. 
 
 
 #### III - Burning of Tokens
