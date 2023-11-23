@@ -20,53 +20,107 @@ This contract has a modifier called onlyCreditor which only allows the creditor 
 ### Executing program
 
 In order to run this program, you can use Remix, an online Solidity IDE which I used to develop this contract. For starters, please go to the Remix website at https://remix.ethereum.org/.
-Upon reaching the website, create a new file by clicking the "New File" button around the center of the website or the button that looks like a piece of paper with the top right corner folded found on the top left corner of the website under workspaces. Save the file under the file name of your choice while making sure to use the .sol extension (e.g. MyFirstProgram.sol). Copy and then paste the following code into the file you have just created:
+Upon reaching the website, create a new file by clicking the "New File" button around the center of the website or the button that looks like a piece of paper with the top right corner folded found on the top left corner of the website under workspaces. Save the file under the file name of your choice while making sure to use the .sol extension (e.g. ErrorHandling.sol). Copy and then paste the following code into the file you have just created:
 
 
 ```Solidity
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.18;
+pragma solidity >=0.6.12 <0.9.0;
 
-/*
-       REQUIREMENTS
-    1. Your contract will have public variables that store the details about your coin (Token Name, Token Abbrv., Total Supply)
-    2. Your contract will have a mapping of addresses to balances (address => uint)
-    3. You will have a mint function that takes two parameters: an address and a value. 
-       The function then increases the total supply by that number and increases the balance 
-       of the “sender” address by that amount
-    4. Your contract will have a burn function, which works the opposite of the mint function, as it will destroy tokens. 
-       It will take an address and value just like the mint functions. It will then deduct the value from the total supply 
-       and from the balance of the “sender”.
-    5. Lastly, your burn function should have conditionals to make sure the balance of "sender" is greater than or equal 
-       to the amount that is supposed to be burned.
-*/
+contract FunctionsAndErrors{
 
-contract MyToken {
+  address creditor;
+ 
+  uint creditorBalance = 1000; //Simulated creditor balance in wei
+  uint[] debtorBalance = [200,0]; //Simulated debtor balance in wei
+  uint transactionFee = 10; // Simulated transaction fee in wei
+  
+  //Checks if there is an ongoing transaction assuming we are limited to one at a time
+  bool[] debtorOnCooldown = [false,false];
+  
+  //Constructor sets the address of msg.sender to creditor for the purposes of this demonstration 
+  constructor(){
+    creditor = msg.sender;
+  }
 
-    // public variables here
-    string public tokenName = "Banana";
-    string public tokenAbbreviation = "BNN";
-    uint public totalSupply = 0;
+  //Creation of onlyCreditor modifier
+  modifier onlyCreditor{
 
-    // mapping variable here
-    mapping(address => uint) public balances;
+    require(creditor == msg.sender, "Only the creditor can access this function");
+    _;
 
-    // mint function
-    function mintToken(address _address, uint _value) public{
-        totalSupply += _value;
-        balances[_address] += _value;
-    }
+  }
 
-    // burn function
-    function burnToken(address _address, uint _value) public{
-        
-        //If statement to make sure that the provided address's balance is sufficient before burning token
-        if(balances[_address] >= _value){
-            totalSupply -= _value;
-            balances[_address] -= _value;
-        }
-    }
+  //Function to get the balance of the creditor's account. 
+  /*The function getCreditorBalance() will not return the balance 
+  if you use a different address from the one initialized in the constructor.*/
+  function getCreditorBalance() public view onlyCreditor returns(uint){
+
+    return creditorBalance;
+
+  }
+
+  //Function to get the balance of the debtor's account. This is not secure and is just for testing purposes. 
+  function getDebtorBalance(uint _debtorId) public view onlyCreditor returns(uint){
+    require(_debtorId == 0 || _debtorId == 1,"Invalid debtor ID");
+    return debtorBalance[_debtorId];
+
+  }
+
+  /*Function to send the loan amount to the debtor.
+    Asserts that the transaction fee is 10 because that value has no way to be updated in this contract except
+    for triggerAssert() which exists for testing purposes.
+    For each transaction the debtor must pay a simulated 10 wei fee.
+    Only the creditor can access this function.
+    Requires that the debtor is not on cooldown.
+    Will revert if either the creditor's balance or the debtor's balance is insufficient.*/
+  function sendLoan(uint _loanAmount, uint _debtorId) public payable onlyCreditor{
+    assert(transactionFee == 10);
+    require(_debtorId == 0 || _debtorId == 1,"Invalid debtor ID");
+    require(debtorOnCooldown[_debtorId] == false,"Debtor on transaction cooldown cannot receive any loans");
+
+    debtorOnCooldown[_debtorId] = true;
+    
+    if(creditorBalance < _loanAmount)
+        revert("Creditor Balance is insufficient to continue with this transaction.");
+
+    if(debtorBalance[_debtorId] < transactionFee)
+        revert("Debtor Balance is insufficient to continue with this transaction.");
+
+    creditorBalance -= _loanAmount;
+    debtorBalance[_debtorId] += _loanAmount-transactionFee;
+
+  }
+
+  //Function to check the status of the debtor if they are on cooldown from receiving any more loans.
+  function debtorCooldownStatus(uint _debtorId) public view onlyCreditor returns(bool){
+    require(_debtorId == 0 || _debtorId == 1,"Invalid debtor ID");
+    return debtorOnCooldown[_debtorId];
+  }
+
+  //Function to set the debtorOnCooldown of the debtor associated with the provided _debtorId to false.
+  //This function will enable the debtor associated with the provided _debtorId to be able to receive another loan.
+  function resetCooldown(uint _debtorId) public onlyCreditor{
+    require(_debtorId == 0 || _debtorId == 1,"Invalid debtor ID");
+    debtorOnCooldown[_debtorId] = false;
+
+  }
+
+
+  //Changes the value of transactionFee to trigger the assertion found in sendLoan()
+  function triggerAssert() public onlyCreditor{
+    transactionFee++;
+
+    
+  }
+
+  //Function to show the current value of transactionFee
+  function viewTransactionFee() public view onlyCreditor returns(uint){
+    return transactionFee;
+  }
+  
 }
+
 
 ```
 ### Contract Compilation
