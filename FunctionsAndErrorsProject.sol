@@ -93,4 +93,9 @@ contract FunctionsAndErrors{
     return transactionFee;
   }
   
+  //Function to set the transactionFee state variable back to it's default value of 10
+  function resetTransactionFee() public onlyCreditor{
+    transactionFee = 10;
+  }
+  
 }
