@@ -10,19 +10,16 @@ This contract has a modifier called onlyCreditor which only allows the creditor 
 
 The function sendLoan is the primary function of this contract. The function accepts a _loanAmount and a _debtorId(both of which are local variables of type unsigned integer)as paramaters. The function has the following error handling:
  
-An assertion that the transactionFee(state variable of type unsigned integer) is always 10 because under normal operation of the contract the transactionFee does not get changed but the triggerAssert function exists to increment the transactionFee in order to demonstate how assert works which is to throw an error and revert any changes to the state of the contract done before the assertion is executed. 
+*An assertion that the transactionFee(state variable of type unsigned integer) is always 10 because under normal operation of the contract the transactionFee does not get changed but the triggerAssert function exists to increment the transactionFee in order to demonstate how assert works which is to throw an error and revert any changes to the state of the contract done before the assertion is executed. 
 
-A require that the _debtorId parameter be only either equal to 0 or 1 because I limited the number of possible debtors to keep this contract as simple as possible.
+*A require that the _debtorId parameter be only either equal to 0 or 1 because I limited the number of possible debtors to keep this contract as simple as possible.
 
-A revert that gets triggered when the if statement that checks if the creditor's balance is less then the _loanAmount returns true. 
+*A revert that gets triggered when the if statement that checks if the creditor's balance is less then the _loanAmount returns true. 
 
-A revert that gets triggered when the if statement that checks if the debtor's balance is less than the transactionFee returns true.
-
-
+*A revert that gets triggered when the if statement that checks if the debtor's balance is less than the transactionFee returns true.
 
 
 
-mints tokens using the "mintToken" function which accepts an address(acts as the wallet address) and a positive integer value (amount of tokens to be minted or burned depending on the function being called) as parameters. This will then increase the balance of the provided address as well as increase the total supply by updating the "totalSupply" state variable. This contract can also burn tokens using the "burnToken" function which accepts an address and a value as parameters. However unlike the "mintToken" function, the "burnToken" function first performs a balance check on the address provided. If the balance of the address provided is greater than or equal to the amount of tokens to be burned then the burning of tokens will proceed otherwise no burning of tokens will occur and the transaction will be shown as completed. Lastly, this contract allows you to view the balance of a provided address, view the total supply of tokens, view the token name, and view the token abbreviation.
 
 ## Getting Started
 
@@ -92,7 +89,7 @@ After the contract has been deployed, the contract will be found under "Deployed
 
 You can interact with contract with the following actions:
 
-### I - Token Information, Supply Count, and Balances
+#### I - Token Information, Supply Count, and Balances
 1.) Click the "tokenName" button to view the name of the token.
 
 2.) Click the "tokenAbbreviation" button to view the abbreviation of the token.
@@ -101,7 +98,7 @@ You can interact with contract with the following actions:
 
 4.) Copy an address and paste it inside the input field beside the "balances" button. (Please read the "Post Contract Deployment" section of this README.md for instructions on how to find and copy an address) After pasting the address inside the input field, click the "balances" button to view the balance of the account/address you provided.
 
-### II - Minting of Tokens
+#### II - Minting of Tokens
 
 1.) Copy an address and paste it inside the input field beside the "mintToken" button. (Please read the "Post Contract Deployment" section of this README.md for instructions on how to find and copy an address) type a comma (,) after the address you just pasted and type a positive integer beside it. (e.g. 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4,1000). Once the input field beside the "mintToken" button has been filled like in the example shown before, click the "mintToken" button to mint tokens.
 
@@ -109,7 +106,7 @@ You can interact with contract with the following actions:
 
 3.) Click the input field beside the "balances" button and paste the same address you used in the input field beside the "mintToken" button. (e.g. 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4). Afterwards click the "balances" button to confirm that the balance of that address you provided has increased accordingly. If the balance did not increase please make sure that the address you provided matches the address you provided in the input field beside the "mintToken" button. 
 
-### III - Burning of Tokens
+#### III - Burning of Tokens
 
 #### Note: You can attempt to burn tokens even while having zero(0) balance or a balance below the inputted amount of tokens to be burned. The transaction will proceed but no burning of tokens will occur because of the balance check if statement found in the burnToken function of the code I provided that does not allow the burning of tokens to occur when the balance of the provided address/account is zero(0) or below the inputted amount of tokens to be burned. 
 
