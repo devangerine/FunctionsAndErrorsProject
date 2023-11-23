@@ -15,6 +15,12 @@ This contract has a modifier called onlyCreditor which only allows the creditor 
 * triggerAssert - increments the transactionFee state variable to trigger the assert statement that assumes it never changes to demonstrate the function of assert.
 * viewTransactionFee - returns the current value of the state variable transactionFee.
 
+This contract uses the following error handling functions:
+
+* **require** - prevents any code below it if the conditional statement contained within the require function is not met. It has an optional message parameter to provide further context. Typically used for input validation.
+* **assert** - similar to require it also contains a conditional statement within it but has no mmessage parameter and is typically used for debugging making sure that developer has not written code that changed something within the program that it should not have. If an assert is triggered a revert will occur which reverses any changes done to the state of the contract.
+* **revert** - reverses any changes done to the state of the contract. Typically contained within a conditional statement and if the conditonal statement returns true, the revert statement is triggered. 
+
 ## Getting Started
 
 ### Executing program
